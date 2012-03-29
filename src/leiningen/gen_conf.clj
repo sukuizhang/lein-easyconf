@@ -3,7 +3,6 @@
 
 (defn gen-conf
   [project & [path]]
-  (prn project)
   (let [path (or path
                  (:test-path project)
                  "etc")])
