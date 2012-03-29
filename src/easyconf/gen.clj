@@ -3,13 +3,6 @@
             [clojure.tools.namespace :as namespace])
   (:use [midje.sweet]))
 
-(defn load-ns-in-project
-  []
-    (doseq [n (namespace/find-namespaces-on-classpath)]
-       (try
-         (require n)
-         (catch Exception e (println "error load " n)))))
-
 (defn config-var-script
   [var]
   (-> (:comment (meta var))
@@ -45,9 +38,26 @@
                              .getParent))
     (spit ns-file script)))
 
-(defn gen-conf [path]
+(defn gen-conf [path & ns-syms]
   (println "loading config vars in project ...")
-  (load-ns-in-project)
+  (apply confs/load-ns (map symbol ns-syms))
   (println "creating config file ...")
   (create-config-file path)
   (println "successful created config file ..."))
+
+(defn build-args-text
+  [project args]
+  (let [path (or (:test-path project)
+              "etc")
+        ns-syms (cond (empty? args) [(:name project)]
+                      :else args)]
+    (->> (cons path ns-syms)
+         (map pr-str)
+         (interpose " ")
+         (apply str))))
+
+(fact
+  (build-args-text {:name "xyz" :test-path "test"} []) => "\"test\" \"xyz\""
+  (build-args-text {:name "xyz"} []) => "\"etc\" \"xyz\""
+  (build-args-text {:name "xyz" :test-path "test"} ["abc"]) => "\"test\" \"abc\""
+  (build-args-text {:name "xyz" :test-path "test"} ["abc" "def" "ghi"]) => "\"test\" \"abc\" \"def\" \"ghi\"")

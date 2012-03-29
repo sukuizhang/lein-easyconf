@@ -10,7 +10,7 @@
   <scm>
     <connection>scm:git:git://github.com/sukuizhang/lein-easyconf.git</connection>
     <developerConnection>scm:git:ssh://git@github.com/sukuizhang/lein-easyconf.git</developerConnection>
-    <tag>51d3f5ef99c9a91b5bea31f0819e7d56a5c52d79</tag>
+    <tag>3ace279a0fd3b63bffc2610cbe868f9768b0f6de</tag>
     <url>https://github.com/sukuizhang/lein-easyconf</url>
   </scm>
   <build>
