@@ -22,28 +22,27 @@
   ";;this is var1\n(config-once :var1 \"23\")\n\n")
 
 (defn ensure-path-exists
-  "make directory if does not existes"
-  [path & [isdir?]]
+  "ensure directory existes"
+  [path]
   (let [f (java.io.File. path)]
     (if (not (.exists f))
       (do
-        (ensure-path-exists (.getParent f) true)
-        (if isdir?
-          (.mkdir f)
-          (.createNewFile f))))
-    f))
+        (ensure-path-exists (.getParent f))
+        (.mkdir f)))))
 
 (defn create-config-file
   "create a config template file."
   [path]
-  (let [ns-file (.getAbsolutePath (java.io.File. (str path "/config/autocreate.clj")))
+  (let [ns-file (str path "/config/autocreate.clj")
         head "(ns config.autocreate\n  (:use    [easyconf.core]))\n\n"
         script (->> @@#'confs/conf-vars
                     vals
                     (map config-var-script)
                     (cons head)
                     (apply str))]
-    (ensure-path-exists ns-file)
+    (ensure-path-exists (-> (java.io.File. ns-file)
+                             .getAbsoluteFile
+                             .getParent))
     (spit ns-file script)))
 
 (defn gen-conf [path]
