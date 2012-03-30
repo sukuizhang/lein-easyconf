@@ -16,18 +16,9 @@ add to porject.clj
 ### use lein plugin gen-conf to create your config namespace.
 Go to your project path, and run
     lein gen-conf
-it load all config var in your current project, and create
-namepaces. 
-actually,it load all namespace that's name starts with your
-project name. for example, if your project name is clj-rpc, and then
-it will load config var define in clj-rpc.server,
-clj-rpc.client,...,but it do not load config var define in
-rmi-service.simple.
-so, if your namespace name in project not start with project name, or
-you want to load config var define in libs you depend.you must special
-the namespace prefix you want gen-conf plugin load,like follow:
-    lein gen-conf clj-rpc rmi-service ...
-
-the namespace file created named config.autocreated, and put it into
-test path. 
+it load all config var in your current project, create
+a namepaces named config.autocreated, and then put it into test path.
+if you want change the path config namespace put into, you can add a
+parameter to special this path, as follow: 
+    lein gen-conf you-path
 
