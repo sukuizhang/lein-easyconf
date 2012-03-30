@@ -27,13 +27,17 @@ gen-conf plugin load config var in all namespace that's name start
 with one of defconf-ns-prefixs. in default, defconf-ns-prefixs is
 [your-project-name], if you add defconf-ns-prefix attribute to your
 project like below:
+
 ```clojure
 :defconf-ns-prefix "your new prefix"
 ```
+
 then your defconf-ns-prefixs change to [your-new-prefix]
 and even you add defconf-ns-prefixs attribute to your project like
 below:
+
 ```clojure
 :defconf-ns-prefixs ["your new prefix1" "your new prefix2" ...]
 ```
+
 then your defconf-ns-prefixs change to ["your new prefix1" "your new prefix2" ...]
