@@ -2,7 +2,7 @@
 
 (defn build-args-text
   [project path]
-  (let [path (or path (:test-path project))
+  (let [path (or path "etc")
         defconf-ns-prefixs (or (:defconf-ns-prefixs project)
                                [(or (:defconf-ns-prefix project)
                                     (:name project))])]
