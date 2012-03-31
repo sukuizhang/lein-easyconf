@@ -17,6 +17,13 @@
         (ensure-path-exists (.getParent f))
         (.mkdir f)))))
 
+(defn merge-exist-config
+  [path]
+  (let [ns-file (str path "/config/autocreate.clj")]
+    (when (.exists (java.io.File. ns-file))
+      (println "find existd old config file, load it to merge exist config ...")
+      (load-file ns-file))))
+
 (defn create-config-file
   "create a config template file."
   [path]
@@ -35,6 +42,7 @@
 (defn gen-conf [path & ns-syms]
   (println "loading config vars in project ...")
   (apply confs/load-ns (map symbol ns-syms))
+  (merge-exist-config path)
   (println "creating config file ...")
   (create-config-file path)
   (println "successful created config file ..."))
